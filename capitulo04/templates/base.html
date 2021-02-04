@@ -32,12 +32,6 @@
     type="image/x-icon">
 {% endblock %}
 
-{% block scripts %}
-{{ super() }}
-{{ moment.include_moment() }}
-{{ moment.locale('pt') }}
-{% endblock %}
-
 {% block content %}
 <div class="container">
     {% block page_content %}{% endblock %}
