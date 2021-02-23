@@ -1,7 +1,7 @@
 from flask import Flask, render_template, redirect, url_for, session
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
-from wtforms.validators import DataRequired
+from wtforms.validators import DataRequired, ValidationError
 from config import Config
 
 app = Flask(__name__)
@@ -12,6 +12,9 @@ class Name(FlaskForm):
     nome = StringField('nome', validators=[DataRequired()])
     submit = SubmitField('OK')
 
+    def check_nome(form, nome):
+        if not nome.data:
+            raise ValidationError('Teste')
 
 @app.route('/')
 def index():
