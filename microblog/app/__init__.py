@@ -1,4 +1,6 @@
+# Esse é o modulo app
 from flask import Flask
+# Esse modulo é localizado na pasta que antecede app, a pasta root
 from config import Config
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
