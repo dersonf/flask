@@ -4,12 +4,18 @@ from flask import Flask
 from config import Config
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
+# Implementa a administração de autenticação do usuário
+from flask_login import LoginManager
 
 app = Flask(__name__)
 # Carrega todas as configs da classe Config
 app.config.from_object(Config)
+# Instacia o modulo de banco de dados
 db = SQLAlchemy(app)
+# Instancia o modulo de atualização do banco de dados
 migrate = Migrate(app, db)
+# Instancia o modulo de gerenciamento de sessão/autenticação do usuário
+login = LoginManager(app)
 
 # models é a estrutura do banco de dados
 from app import routes, models

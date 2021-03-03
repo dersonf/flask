@@ -1,8 +1,13 @@
 from datetime import datetime
+# Introduz a criptografia que armazena a hash de uma palavra qualquer
+from werkzeug.security import generate_password_hash, check_password_hash
+# Para ajudar nos metodos do modulo flask-login
+from flask_login import UserMixin
 from app import db
+from app import login
 
 
-class User(db.Model):
+class User(UserMixin, db.Model):
     'Como a classe chama User a tabela terá o nome user'
     'Classe que cria a tabela de usuários'
     id = db.Column(db.Integer, primary_key=True)
@@ -16,6 +21,14 @@ class User(db.Model):
     def __repr__(self):
         return f"<User {self.username}>"
 
+    def set_password(self, password):
+        'Gera a hash a ser armazenada na base'
+        self.password_hash = generate_password_hash(password)
+
+    def check_password(self, password):
+        'Retorna falso ou verdadeiro na verificação da hash'
+        return check_password_hash(self.password_hash, password)
+
 
 class Post(db.Model):
     'Classe que cria a tabela dos posts'
@@ -26,4 +39,10 @@ class Post(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
     def __repr__(self):
-        return "f<Post {self.body}>"
+        return f"<Post {self.body}>"
+
+
+# Para passar o id do usuário para o Flask-Login
+@login.user_loader
+def load_user(id):
+    return User.query.get(int(id))
