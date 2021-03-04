@@ -16,6 +16,9 @@ db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 # Instancia o modulo de gerenciamento de sessão/autenticação do usuário
 login = LoginManager(app)
+# Definindo a view onde o usuário efetua login quando for obrigatório
+# com @login_required
+login.login_view = 'login'
 
 # models é a estrutura do banco de dados
 from app import routes, models

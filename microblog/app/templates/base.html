@@ -10,7 +10,12 @@
         <div>Microblog:
             <!-- o url_for() pega o endereço no endpoint -->
             <a href="{{ url_for('index') }}">Home</a>
+            <!-- identifica se o usuário está logado -->
+            {% if current_user.is_anonymous %}
             <a href="{{ url_for('login') }}">Login</a>
+            {% else %}
+            <a href="{{ url_for('logout') }}">Logout</a>
+            {% endif %}
         </div>
         <hr>
         <!-- with pega o resultado do get e guarda em messages -->
