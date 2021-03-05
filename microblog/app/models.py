@@ -1,4 +1,5 @@
 from datetime import datetime
+from hashlib import md5
 # Introduz a criptografia que armazena a hash de uma palavra qualquer
 from werkzeug.security import generate_password_hash, check_password_hash
 # Para ajudar nos metodos do modulo flask-login
@@ -28,6 +29,11 @@ class User(UserMixin, db.Model):
     def check_password(self, password):
         'Retorna falso ou verdadeiro na verificação da hash'
         return check_password_hash(self.password_hash, password)
+    
+    def avatar(self, size):
+        'Gera url para o avatar em gravatar'
+        digest = md5(self.email.lower().encode('utf-8')).hexdigest()
+        return f"https://www.gravatar.com/avatar/{digest}?d=robohash&r=x&s={size}"
 
 
 class Post(db.Model):
