@@ -3,9 +3,24 @@ from flask import render_template, flash, redirect, url_for, request
 # carregando o Flask-Login
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
-from app import app, db
-from app.forms import LoginForm, RegistrationForm, EditProfileForm, EmptyForm, PostForm
+from app import app, db, login
+from app.forms import LoginForm, RegistrationForm, EditProfileForm, EmptyForm, PostForm, ResetPasswordRequestForm
 from app.models import User, Post
+from app.email import send_mail
+
+
+# Função a ser executada antes de qualquer view
+@app.before_request
+def before_request():
+    if current_user.is_authenticated:
+        current_user.last_seen = datetime.utcnow()
+        db.session.commit()
+
+
+# Carrega o usuário da sessão armazenado no browser
+@login.user_loader
+def load_user(id):
+    return User.query.filter_by(id=id).first()
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -172,9 +187,16 @@ def explore():
                            next_url=next_url, prev_url=prev_url)
 
 
-# Função a ser executada antes de qualquer view
-@app.before_request
-def before_request():
+@app.route('/reset_password_request', methods=['GET', 'POST'])
+def reset_password_request():
     if current_user.is_authenticated:
-        current_user.last_seen = datetime.utcnow()
-        db.session.commit()
+        return redirect(url_for('index'))
+    form = ResetPasswordRequestForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(email=form.email.data).first()
+        if user:
+            send_mail(user)
+        flash('Check your email for the instructions to reset password')
+        return redirect(url_for('login'))
+    return render_template('reset_password_request.html',
+                           title="Reset Password", form=form)
