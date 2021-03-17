@@ -1,11 +1,12 @@
 from datetime import datetime
+from time import time
 from hashlib import md5
 # Introduz a criptografia que armazena a hash de uma palavra qualquer
 from werkzeug.security import generate_password_hash, check_password_hash
 # Para ajudar nos metodos do modulo flask-login
 from flask_login import UserMixin
-from app import db
-from app import login
+import jwt
+from app import db, login, app
 
 followers = db.Table('followers',
     db.Column('follower_id', db.Integer, db.ForeignKey('user.id')),
@@ -76,6 +77,21 @@ class User(UserMixin, db.Model):
         # Faz a união e ordena
         return followed.union(own).order_by(Post.timestamp.desc())
         
+    def get_reset_password_token(self, expires_in=600):
+        'Gera o token para reset de senha.'
+        return jwt.encode(
+            {'reset_password': self.id, 'exp': time() + expires_in},
+            app.config['SECRET_KEY'], algorithm='HS256')
+
+    @staticmethod
+    def verify_reset_password_token(token):
+        'Verifica o token para gerar nova senha.'
+        try:
+            id = jwt.decode(token, app.config['SECRET_KEY'],
+                            algoritms=['HS256'])['reset_password']
+        except:
+            return
+        return User.query.get(id)
 
 
 class Post(db.Model):
