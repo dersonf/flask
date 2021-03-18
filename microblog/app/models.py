@@ -88,7 +88,7 @@ class User(UserMixin, db.Model):
         'Verifica o token para gerar nova senha.'
         try:
             id = jwt.decode(token, app.config['SECRET_KEY'],
-                            algoritms=['HS256'])['reset_password']
+                            algorithms=['HS256'])['reset_password']
         except:
             return
         return User.query.get(id)

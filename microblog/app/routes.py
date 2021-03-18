@@ -213,11 +213,13 @@ def reset_password(token):
         logging.info("Usuário já autenticado")
         return redirect(url_for('index'))
     user = User.verify_reset_password_token(token)
+    logging.info(f"resultado da query: {user}")
     if not user:
         logging.info("Usuário não encontrado")
         return redirect(url_for('index'))
     form = ResetPasswordForm()
     if form.validate_on_submit():
+        logging.info("Validando usuário")
         user.set_password(form.password.data)
         db.session.commit()
         flash('You password has been reset.')
