@@ -12,6 +12,8 @@ from flask_migrate import Migrate
 from flask_login import LoginManager
 # Modulo do Flask Mail
 from flask_mail import Mail
+# Modulo do Bootstrap - pra deixar mais bunitim
+from flask_bootstrap import Bootstrap
 
 app = Flask(__name__)
 # Carrega todas as configs da classe Config
@@ -24,6 +26,8 @@ migrate = Migrate(app, db)
 login = LoginManager(app)
 # Instancia o Flask Mail
 mail = Mail(app)
+# Instanciando o Bootstrap
+bootstrap = Bootstrap(app)
 # Definindo a view onde o usuário efetua login quando for obrigatório
 # com @login_required
 login.login_view = 'login'
