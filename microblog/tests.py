@@ -70,10 +70,10 @@ class UserModelCase(unittest.TestCase):
         db.session.commit()
 
         # setup the followers
-        u1.follow(u2) # john follows susan
-        u1.follow(u4) # john follows david
-        u2.follow(u3) # susan follows mary
-        u3.follow(u4) # mary follows david
+        u1.follow(u2)  # john follows susan
+        u1.follow(u4)  # john follows david
+        u2.follow(u3)  # susan follows mary
+        u3.follow(u4)  # mary follows david
         db.session.commit()
 
         # check the followed posts of each user

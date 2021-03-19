@@ -8,7 +8,8 @@ from flask_login import UserMixin
 import jwt
 from app import db, login, app
 
-followers = db.Table('followers',
+followers = db.Table(
+    'followers',
     db.Column('follower_id', db.Integer, db.ForeignKey('user.id')),
     db.Column('followed_id', db.Integer, db.ForeignKey('user.id'))
 )
@@ -43,11 +44,13 @@ class User(UserMixin, db.Model):
     def check_password(self, password):
         'Retorna falso ou verdadeiro na verificação da hash'
         return check_password_hash(self.password_hash, password)
-    
+
     def avatar(self, size):
         'Gera url para o avatar em gravatar'
         digest = md5(self.email.lower().encode('utf-8')).hexdigest()
-        return f"https://www.gravatar.com/avatar/{digest}?d=robohash&r=x&s={size}"
+        return (
+            f"https://www.gravatar.com/avatar/{digest}?d=robohash&r=x&s={size}"
+        )
 
     def follow(self, user):
         if not self.is_following(user):
@@ -64,19 +67,19 @@ class User(UserMixin, db.Model):
     def followed_posts(self):
         # Mostra os posts que o usuário segue mas não os próprios
         # return Post.query.join(
-            # Monta a tabela de seguidores e posts, filtra e ordena
-            # followers, (followers.c.followed_id == Post.user_id)).filter(
-            #     followers.c.follower_id == self.id).order_by(
-            #         Post.timestamp.desc())
+        #     Monta a tabela de seguidores e posts, filtra e ordena
+        #     followers, (followers.c.followed_id == Post.user_id)).filter(
+        #         followers.c.follower_id == self.id).order_by(
+        #             Post.timestamp.desc())
         # Busca os seguidos
         followed = Post.query.join(
             followers, (followers.c.followed_id == Post.user_id)).filter(
                 followers.c.follower_id == self.id)
         # Busca os próprios posts
-        own = Post.query.filter_by(user_id = self.id)
+        own = Post.query.filter_by(user_id=self.id)
         # Faz a união e ordena
         return followed.union(own).order_by(Post.timestamp.desc())
-        
+
     def get_reset_password_token(self, expires_in=600):
         'Gera o token para reset de senha.'
         return jwt.encode(

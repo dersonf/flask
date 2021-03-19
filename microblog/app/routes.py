@@ -5,8 +5,8 @@ from flask import render_template, flash, redirect, url_for, request
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
 from app import app, db, login
-from app.forms import LoginForm, RegistrationForm, EditProfileForm, EmptyForm, \
-    PostForm, ResetPasswordRequestForm, ResetPasswordForm
+from app.forms import LoginForm, RegistrationForm, EditProfileForm, \
+    EmptyForm, PostForm, ResetPasswordRequestForm, ResetPasswordForm
 from app.models import User, Post
 from app.email import send_password_reset_email
 
@@ -68,8 +68,12 @@ def login():
         if user is None or not user.check_password(form.password.data):
             flash('Invalid username or password')
             return redirect(url_for('login'))
-        # Exibe mensagem para o usuário, o template precisa ter o get desse componente
-        # flash(f"Login requestd for user {form.username.data}, remember_me={form.remember_me.data}")
+        """Exibe mensagem para o usuário, o template precisa ter o get desse
+        componente"""
+        """
+        flash(f"Login requestd for user {form.username.data},
+              remember_me={form.remember_me.data}")
+        """
         # Nessa linha o usuário é autenticado
         login_user(user, remember=form.remember_me.data)
         # Pega a url anterior quanto o login foi obrigado
@@ -134,7 +138,8 @@ def edit_profile():
     elif request.method == 'GET':
         form.username.data = current_user.username
         form.about_me.data = current_user.about_me
-    return render_template('edit_profile.html', title='Edit Profile', form=form)
+    return render_template('edit_profile.html', title='Edit Profile',
+                           form=form)
 
 
 @app.route('/follow/<username>', methods=['POST'])
