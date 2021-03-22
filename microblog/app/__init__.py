@@ -3,7 +3,7 @@ import os
 import logging
 from logging.handlers import SMTPHandler, RotatingFileHandler
 # Esse é o modulo app
-from flask import Flask
+from flask import Flask, request
 # Esse modulo é localizado na pasta que antecede app, a pasta root
 from config import Config
 from flask_sqlalchemy import SQLAlchemy
@@ -14,6 +14,10 @@ from flask_login import LoginManager
 from flask_mail import Mail
 # Modulo do Bootstrap - pra deixar mais bunitim
 from flask_bootstrap import Bootstrap
+# Modulo para coletar e imprimir a data e hora de acordo com o SO do usuário
+from flask_moment import Moment
+# Modulo para a tradução do blog
+from flask_babel import Babel
 
 app = Flask(__name__)
 # Carrega todas as configs da classe Config
@@ -28,9 +32,19 @@ login = LoginManager(app)
 mail = Mail(app)
 # Instanciando o Bootstrap
 bootstrap = Bootstrap(app)
+# Instanciando o modulo de data e hora
+moment = Moment(app)
+# Instaciando o modulo de tradução do Babel
+babel = Babel(app)
+
 # Definindo a view onde o usuário efetua login quando for obrigatório
 # com @login_required
 login.login_view = 'login'
+
+# Decorator pra pegar a linguagem a ser traduzida
+@babel.localeselector
+def get_locale():
+    return request.accept_languages.best_match(app.config['LANGUAGES'])
 
 # models é a estrutura do banco de dados
 from app import routes, models, errors
