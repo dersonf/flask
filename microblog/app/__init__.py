@@ -18,6 +18,9 @@ from flask_bootstrap import Bootstrap
 from flask_moment import Moment
 # Modulo para a tradução do blog
 from flask_babel import Babel
+# Importando o blueprint de erros
+from app.errors import bp as errors_bp
+app.register_blueprint(errors_bp)
 
 app = Flask(__name__)
 # Carrega todas as configs da classe Config
@@ -40,6 +43,8 @@ babel = Babel(app)
 # Definindo a view onde o usuário efetua login quando for obrigatório
 # com @login_required
 login.login_view = 'login'
+# Personalizando a mensagem de login obrigatório.
+login.login_message = 'Se não estiver autenticado já era.'
 
 # Decorator pra pegar a linguagem a ser traduzida
 @babel.localeselector
@@ -47,7 +52,8 @@ def get_locale():
     return request.accept_languages.best_match(app.config['LANGUAGES'])
 
 # models é a estrutura do banco de dados
-from app import routes, models, errors
+# removido a função errors
+from app import routes, models
 
 if not app.debug:
     if app.config['MAIL_SERVER']:

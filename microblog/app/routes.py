@@ -9,6 +9,8 @@ from app.forms import LoginForm, RegistrationForm, EditProfileForm, \
     EmptyForm, PostForm, ResetPasswordRequestForm, ResetPasswordForm
 from app.models import User, Post
 from app.email import send_password_reset_email
+# Importa a função que traduz
+from flask_babel import _
 
 FORMAT = '%(asctime)s %(message)s'
 logging.basicConfig(level=logging.INFO, format=FORMAT)
@@ -66,7 +68,7 @@ def login():
         user = User.query.filter_by(username=form.username.data).first()
         # Valida se o usuário existe ou se a senha foi preenchida
         if user is None or not user.check_password(form.password.data):
-            flash('Invalid username or password')
+            flash(_('Invalid username or password'))
             return redirect(url_for('login'))
         """Exibe mensagem para o usuário, o template precisa ter o get desse
         componente"""
