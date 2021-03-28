@@ -1,7 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
 {% if nome %}
-    <a href="/logout">Logout</a>
     <h1>Bem vindo {{ nome|title|replace(' De ', ' de ')|replace(' Da ', ' da ') }}!!!</h1>
 {% else %}
-    <a href="/login">Login</a>
     <h1>Hello World!</h1>
 {% endif %}
+
+{% endblock %}
