@@ -16,3 +16,5 @@ class Config(object):
     MAIL_SENDER = os.environ.get('MAIL_SENDER')
     ADMINS = ['anderson@example.com']
     POSTS_PER_PAGE = 10
+    # Tradução do inglês para o espanhol
+    LANGUAGES = ['en', 'es']

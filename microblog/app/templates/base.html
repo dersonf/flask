@@ -48,3 +48,11 @@
         {% block app_content %}{% endblock %}
     </div>
 {% endblock %}
+
+<!-- Adicionando o suporte de data e hora de acordo com o Browser do usuário-->
+{% block scripts %}
+    <!-- Herdando o bloco scripts e adicionando essa conf-->
+    {{ super() }}
+    {{ moment.include_moment() }}
+    {{ moment.locale('pt-br') }}
+{% endblock %}
