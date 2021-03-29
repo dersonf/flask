@@ -1,0 +1,11 @@
+<h1>{{ title }}</h1>
+<a href="/">Index</a> - 
+<a href="/checkbox">Boolean</a> - 
+
+{% if nome %}
+    <a href="/logout">Logout</a>
+{% else %}
+    <a href="/login">Login</a>
+{% endif %}
+
+{% block content %}{% endblock content %}
