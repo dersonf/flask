@@ -19,14 +19,12 @@ from flask_moment import Moment
 # Modulo para a tradução do blog
 from flask_babel import Babel
 # Importando o blueprint de erros
-from app.errors import bp as errors_bp
-app.register_blueprint(errors_bp)
 
 app = Flask(__name__)
 # Carrega todas as configs da classe Config
 app.config.from_object(Config)
 # Instacia o modulo de banco de dados
-db = SQLAlchemy(app)
+db = SQLAlchemy()
 # Instancia o modulo de atualização do banco de dados
 migrate = Migrate(app, db)
 # Instancia o modulo de gerenciamento de sessão/autenticação do usuário
@@ -46,10 +44,23 @@ login.login_view = 'login'
 # Personalizando a mensagem de login obrigatório.
 login.login_message = 'Se não estiver autenticado já era.'
 
+def create_app(config_class=Config):
+    app = Flask(__name__)
+    app.config.from_object(config_class)
+
+    db.init_app(app)
+    
+    from app.errors import bp as errors_bp
+    app.register_blueprint(errors_bp)
+
+    return app
+
+
 # Decorator pra pegar a linguagem a ser traduzida
 @babel.localeselector
 def get_locale():
     return request.accept_languages.best_match(app.config['LANGUAGES'])
+
 
 # models é a estrutura do banco de dados
 # removido a função errors
