@@ -19,12 +19,14 @@ class NameForm(FlaskForm):
 
 
 class CheckboxForm(FlaskForm):
-    aceite = BooleanField('Aceita termos?')
+    aceite = BooleanField('Aceita termos?', validators=[DataRequired()])
     submit = SubmitField('OK')
 
-    def __init__(self, respostas: list = None, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.resposta.choices = respostas
+
+class InputCheckboxForm(CheckboxForm):
+    def __init__(self, label='', **kwargs):
+        super(InputCheckboxForm, self).__init__(label, **kwargs)
+        self.label
 
 
 @app.route('/')
@@ -42,14 +44,15 @@ def nome():
         return redirect(url_for('index'))
     return render_template('login.html', title='Login', form=form)
 
+
 @app.route('/checkbox', methods=['GET', 'POST'])
 def checkbox():
-    form = CheckboxForm()
+    form = CheckboxForm(name='Teste')
     if form.validate_on_submit():
-        if form.fritas.data == True:
-            session['fritas'] = True
+        if form.aceite.data == True:
+            session['aceite'] = True
         else:
-            session['fritas'] = False
+            session['aceite'] = False
         return redirect(url_for('index'))
     return render_template('checkbox.html', title='Teste boolean', form=form)
 
