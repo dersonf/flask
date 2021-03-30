@@ -10,7 +10,8 @@ app.config.from_object(Config)
 
 # Formulários
 class NameForm(FlaskForm):
-    nome = StringField('nome', validators=[DataRequired(message='Precisa ser preenchido')], _prefix='ttt')
+    nome = StringField(label='nome', validators=[DataRequired
+        (message='Precisa ser preenchido')], default='anderson')
     submit = SubmitField('OK')
 
     def validate_nome(form, field):
@@ -18,15 +19,14 @@ class NameForm(FlaskForm):
             raise ValidationError('Nome só com duas letras?')
 
 
-class CheckboxForm(FlaskForm):
-    aceite = BooleanField('Aceita termos?', validators=[DataRequired()])
-    submit = SubmitField('OK')
+class CheckboxBaseForm(FlaskForm):
+    checkbox = BooleanField('Nome do cão')
+    # checkbox1 = BooleanField('Nome do cão')
+    submit = SubmitField('Aceito')
 
-
-class InputCheckboxForm(CheckboxForm):
-    def __init__(self, label='', **kwargs):
-        super(InputCheckboxForm, self).__init__(label, **kwargs)
-        self.label
+    def __init__(self, label, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.checkbox.label = label
 
 
 @app.route('/')
@@ -47,12 +47,12 @@ def nome():
 
 @app.route('/checkbox', methods=['GET', 'POST'])
 def checkbox():
-    form = CheckboxForm(name='Teste')
+    form = CheckboxBaseForm('pizza?')
     if form.validate_on_submit():
-        if form.aceite.data == True:
-            session['aceite'] = True
+        if form.checkbox.data == True:
+            session['checkbox'] = True
         else:
-            session['aceite'] = False
+            session['checkbox'] = False
         return redirect(url_for('index'))
     return render_template('checkbox.html', title='Teste boolean', form=form)
 

@@ -4,13 +4,23 @@
 <form action="" method="post">
     {{ form.hidden_tag() }}
     <p>
-        {{ form.aceite.label }}
+        {{ form.checkbox.label }}
         <!-- required=False para exibir a mensagem que vc deseja -->
-        {{ form.aceite() }}
-        {% for error in form.aceite.errors %}
+        {{ form.checkbox() }}
+        {% for error in form.checkbox.errors %}
             <span style="color:red;">[{{ error }}]</span>
         {% endfor %}
     </p>
+    {% if form.checkbox1 %}
+    <p>
+        {{ form.checkbox1.label }}
+        <!-- required=False para exibir a mensagem que vc deseja -->
+        {{ form.checkbox1() }}
+        {% for error in form.checkbox1.errors %}
+            <span style="color:red;">[{{ error }}]</span>
+        {% endfor %}
+    </p>
+    {% endif %}
     <p>
         {{ form.submit() }}
     </p>
