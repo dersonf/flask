@@ -20,7 +20,7 @@ class NameForm(FlaskForm):
 
 
 class CheckboxBaseForm(FlaskForm):
-    checkbox = BooleanField('Nome do cão')
+    checkbox = BooleanField('Nome do cão', default=False)
     # checkbox1 = BooleanField('Nome do cão')
     submit = SubmitField('Aceito')
 
@@ -49,10 +49,10 @@ def nome():
 def checkbox():
     form = CheckboxBaseForm('pizza?')
     if form.validate_on_submit():
-        if form.checkbox.data == True:
-            session['checkbox'] = True
-        else:
-            session['checkbox'] = False
+        if form.checkbox.data == False:
+            session['checkbox'] = 'nopizza'
+        elif form.checkbox.data == True:
+            session['checkbox'] = 'compizza'
         return redirect(url_for('index'))
     return render_template('checkbox.html', title='Teste boolean', form=form)
 

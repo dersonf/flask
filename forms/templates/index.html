@@ -4,12 +4,14 @@
 
 {% if nome %}
     <h1>Bem vindo {{ nome|title|replace(' De ', ' de ')|replace(' Da ', ' da ') }}!!!</h1>
+    {% if session.checkbox %}
+        {% if session.checkbox == 'nopizza' %}
+        <h1>Hoje não tem pizza...</h1>
+        {% elif session.checkbox == 'compizza' %}
+        <h1>Hoje tem pizza!</h1>
+        {% endif %}
+    {% endif %}
 {% else %}
     <h1>Hello World!</h1>
 {% endif %}
-
-{% if session.fritas %}
-    <h1>Vai comer fritinhas...</h1>
-{% endif %}
-
 {% endblock %}
