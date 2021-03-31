@@ -1,14 +1,27 @@
 from flask import Flask, render_template, redirect, url_for, session
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, BooleanField
+from wtforms import (
+    StringField,
+    SubmitField,
+    BooleanField,
+    RadioField,
+    )
 from wtforms.validators import DataRequired, ValidationError, InputRequired
 from config import Config
+import logging
+
+
 
 app = Flask(__name__)
 app.config.from_object(Config)
 
+# logging.basicConfig(level=logging.INFO, format='%(name)s - %(levelname)s - %(message)s')
+
 
 # Formulários
+class SubmitPadrao(FlaskForm):
+    submit = SubmitField('OK')
+
 class NameForm(FlaskForm):
     nome = StringField(label='nome', validators=[DataRequired
         (message='Precisa ser preenchido')], default='anderson')
@@ -27,6 +40,10 @@ class CheckboxBaseForm(FlaskForm):
     def __init__(self, label, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.checkbox.label = label
+
+
+class SelecaoForm(SubmitPadrao):
+    pergunta = RadioField('É um ou dois?', choices=[('1', 'um'), ('2', 'dois')])
 
 
 @app.route('/')
@@ -55,6 +72,15 @@ def checkbox():
             session['checkbox'] = 'compizza'
         return redirect(url_for('index'))
     return render_template('checkbox.html', title='Teste boolean', form=form)
+
+
+@app.route('/opcoes', methods=['GET', 'POST'])
+def opcoes():
+    form = SelecaoForm()
+    if form.validate_on_submit():
+        print(form.pergunta.data)
+        return redirect(url_for('index'))
+    return render_template('opcoes.html', title='Seleção', form=form)
 
 
 @app.route('/logout')

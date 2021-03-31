@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+<form action="" method="post">
+    {{ form.hidden_tag() }}
+    <p>
+        {{ form.pergunta.label }}
+        <!-- required=False para exibir a mensagem que vc deseja -->
+        {{ form.pergunta() }}
+        {% for error in form.pergunta.errors %}
+            <span style="color:red;">[{{ error }}]</span>
+        {% endfor %}
+    </p>
+        {{ form.submit() }}
+    </p>
+</form>
+{% endblock %}
