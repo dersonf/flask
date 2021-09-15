@@ -1,0 +1,14 @@
+<h1>Adiciona alimentos</h1>
+
+<form method='POST' action="">
+    {{ form.hidden_tag() }}
+    {{ form.alimento.label }} {{ form.alimento(size=20) }}
+    {{ form.submit }}
+</form>
+
+<h1>Alimentos cadastrados:</h1>
+<ul>
+{% for alimento in alimentos %}
+    <li><b>alimento: </b>{{ alimento.alimento }}, <b>tipo: </b>{{ alimento.tipo.tipo }}</li>
+{% endfor %}
+</ul>

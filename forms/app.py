@@ -15,7 +15,7 @@ import logging
 app = Flask(__name__)
 app.config.from_object(Config)
 
-# logging.basicConfig(level=logging.INFO, format='%(name)s - %(levelname)s - %(message)s')
+logging.basicConfig(level=logging.INFO, format=FORMAT)
 
 
 # Formulários

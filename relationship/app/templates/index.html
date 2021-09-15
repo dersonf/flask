@@ -1,0 +1,10 @@
+<h1>Lista de vegetais carregados na base:</h1>
+<ul>
+{% for vegetal in vegetais %}
+    <li>
+        <b>id:</b> {{ vegetal.id }}, 
+        <b>alimento:</b> {{ vegetal.alimento }}, 
+        <b>vegetal:</b> {{ vegetal.tipo.tipo }}
+    </li>
+{% endfor %}
+</ul>
