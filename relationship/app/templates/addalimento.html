@@ -13,7 +13,7 @@
 <h1>Alimentos cadastrados:</h1>
 <ul>
 {% for alimento in alimentos %}
-    <li><b>alimento: </b>{{ alimento.alimento }}, <b>tipo: </b>{{ alimento.tipo.tipo }}</li>
+    <li><b>alimento: </b>{{ alimento.alimento }}, <b>tipo: </b>{{ alimento.tipo.tipo }} <button><a href="{{ url_for('apaga_alimento', id=alimento.id) }}">Apagar</a></button></li>
 {% endfor %}
 </ul>
 {% endblock %}

@@ -12,7 +12,7 @@
 <h1>Tipos cadastrados:</h1>
 <ul>
 {% for tipo in tipos %}
-    <li>{{ tipo.tipo }}</li>
+    <li>{{ tipo.tipo }}<button><a href="{{  url_for('apaga_tipo', id=tipo.id) }}">Apagar</a></button></li>
 {% endfor %}
 </ul>
 {% endblock %}

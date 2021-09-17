@@ -38,7 +38,25 @@ def addalimento():
         return redirect(url_for('addalimento'))
     return render_template('addalimento.html', form=form, alimentos=alimentos)
 
-# def lista_tipos(request, id):
-#     tipo = Tipo.query.get(id)
-#     form = AlimentoForm(request.POST, obj=tipo)
-#     form.tipos.choices = [(t.id, t.name) for t in Tipo.query.order_by('tipo')]
+
+@app.route('/apaga_alimento/<id>')
+def apaga_alimento(id):
+    '''Apaga o alimento'''
+    alimento = Alimento.query.get(id)
+    db.session.delete(alimento)
+    db.session.commit()
+    return redirect(url_for('addalimento'))
+
+
+@app.route('/apaga_tipo/<id>')
+def apaga_tipo(id):
+    '''Apaga o tipo e seus relacionamentos'''
+    alimentos = Alimento.query.all()
+    for alimento in alimentos:
+        if alimento.tipo.id == int(id):
+            alimento = Alimento.query.get(alimento.id)
+            db.session.delete(alimento)
+    tipo = Tipo.query.get(int(id))
+    db.session.delete(tipo)
+    db.session.commit()
+    return redirect(url_for('addtipo'))
