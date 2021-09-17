@@ -1,5 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField
+from wtforms import StringField, SubmitField, SelectField
+from app.models import Tipo
 
 
 class TipoForm(FlaskForm):
@@ -9,4 +10,6 @@ class TipoForm(FlaskForm):
 
 class AlimentoForm(FlaskForm):
     alimento = StringField('Alimento')
+    # Faz um SelectField dinamico
+    tipos = SelectField(u'Tipos', coerce=int)
     submit = SubmitField('Salvar')

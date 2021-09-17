@@ -1,7 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
 <h1>Adiciona alimentos</h1>
 
 <form method='POST' action="">
     {{ form.hidden_tag() }}
+    {{ form.tipos.label }} {{ form.tipos }}
     {{ form.alimento.label }} {{ form.alimento(size=20) }}
     {{ form.submit }}
 </form>
@@ -12,3 +16,4 @@
     <li><b>alimento: </b>{{ alimento.alimento }}, <b>tipo: </b>{{ alimento.tipo.tipo }}</li>
 {% endfor %}
 </ul>
+{% endblock %}
