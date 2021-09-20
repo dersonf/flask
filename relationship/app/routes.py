@@ -3,6 +3,7 @@ from app import app, db
 from flask import render_template, redirect
 from app.models import Alimento, Tipo
 from app.forms import TipoForm, AlimentoForm
+from sqlalchemy.exc import IntegrityError
 
 
 @app.route('/')
@@ -34,7 +35,12 @@ def addalimento():
         tipo = Tipo.query.get(form.tipos.data)
         alimento = Alimento(alimento=form.alimento.data, tipo=tipo)
         db.session.add(alimento)
-        db.session.commit()
+        try:
+            db.session.commit()
+        except IntegrityError as e:
+            error = str(e.orig)
+            if 'UNIQUE constraint failed: alimento.alimento' in error:
+                app.logger.debug(f"Já existe {e.params[0]} cadastrado.")
         return redirect(url_for('addalimento'))
     return render_template('addalimento.html', form=form, alimentos=alimentos)
 

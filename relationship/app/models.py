@@ -23,12 +23,13 @@ class Tipo(db.Model):
 class Alimento(db.Model):
     '''Tabela de alimento'''
     id = db.Column(db.Integer, unique=True, primary_key=True)
-    alimento = db.Column(db.String(40))
+    alimento = db.Column(db.String(40), unique=True)
     # O relacionamento da chave estrangeira refere-se a tabela tipo campo id
     tipo_id = db.Column(db.Integer, db.ForeignKey('tipo.id'), nullable=False)
 
     def __repr__(self):
         return f"<Alimento: {self.alimento}>"
+
 
 '''
 referencias:
