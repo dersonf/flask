@@ -10,12 +10,22 @@
                 Vegetais
             {% endif %}
         </title>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <ul class=flashes>
+                    {% for message in messages %}
+                        <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
     </head>
     <body>
         <div>
             <a href="{{ url_for('index') }}">Home</a> - 
             <a href="{{ url_for('addtipo') }}">Tipo</a> - 
-            <a href="{{ url_for('addalimento') }}">Alimento</a>
+            <a href="{{ url_for('addalimento') }}">Alimento</a> - 
+            <a href="{{ url_for('logon') }}">Logon</a>
         </div>
         {% block content%}{% endblock %}
     </body>

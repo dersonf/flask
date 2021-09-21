@@ -5,7 +5,7 @@ from app import db
 class Tipo(db.Model):
     '''Tabela de tipo de alimento'''
     id = db.Column(db.Integer, unique=True, primary_key=True)
-    tipo = db.Column(db.String(20), unique=True)
+    tipo = db.Column(db.String(20), unique=True, nullable=False)
     # esse campo alimentos é uma view
     # lazy é como a view vai se comportar, 'dynamic' precisa dos filtros
     # dynamic é bom quando há muitos itens e True acaba deixando a aplicação
@@ -23,7 +23,7 @@ class Tipo(db.Model):
 class Alimento(db.Model):
     '''Tabela de alimento'''
     id = db.Column(db.Integer, unique=True, primary_key=True)
-    alimento = db.Column(db.String(40), unique=True)
+    alimento = db.Column(db.String(40), unique=True, nullable=False)
     # O relacionamento da chave estrangeira refere-se a tabela tipo campo id
     tipo_id = db.Column(db.Integer, db.ForeignKey('tipo.id'), nullable=False)
 
