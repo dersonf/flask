@@ -2,13 +2,19 @@
 
 {% block content %}
 <h1>Logon</h1>
-<form method="post", action="">
+<form method="post", action="", novalidate>
     {{ form.hidden_tag() }}
     <p>
         {{ form.username.label }} {{ form.username(size=20) }}
+        {% for error in form.username.errors %}
+        <span style="color: red">[{{ error }}]</span>
+        {% endfor %}
     </p>
     <p>
         {{ form.password.label }} {{ form.password(size=20) }}
+        {% for error in form.password.errors %}
+        <span style="color: red">[{{ error }}]</span>
+        {% endfor %}
     </p>
     <p>
         {{ form.submit }}

@@ -1,4 +1,5 @@
 from app import db
+from werkzeug.security import generate_password_hash, check_password_hash
 
 
 # Relacionamento de um pra muitos onde o tipo é um e alimento é muitos
@@ -29,6 +30,24 @@ class Alimento(db.Model):
 
     def __repr__(self):
         return f"<Alimento: {self.alimento}>"
+
+
+class User(db.Model):
+    '''Armazena os dados dos usuários'''
+    id = db.Column(db.Integer, unique=True, primary_key=True)
+    username = db.Column(db.String(20), unique=True, nullable=False)
+    fullname = db.Column(db.String(60), nullable=False)
+    password_hash = db.Column(db.String(140), nullable=False)
+
+    def __repr__(self):
+        return f"<Username: {self.username}>"
+
+    def set_password(self, password):
+        '''Define a hash da senha'''
+        self.password_hash = generate_password_hash(password)
+    
+    def check_password(self, password):
+        return check_password_hash(self.password_hash, password)
 
 
 '''
