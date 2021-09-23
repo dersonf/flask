@@ -1,9 +1,16 @@
 from flask.helpers import url_for
-from app import app, db
-from flask import render_template, redirect, flash
+from app import app, db, login
+from flask import render_template, redirect, flash, request
 from app.models import Alimento, Tipo, User
 from app.forms import TipoForm, AlimentoForm, UserLoginForm
 from sqlalchemy.exc import IntegrityError
+from flask_login import login_user, logout_user, login_required
+from werkzeug.urls import url_parse
+
+
+@login.user_loader
+def load_user(user_id):
+    return User.query.get(user_id)
 
 
 @app.route('/')
@@ -13,6 +20,7 @@ def index():
 
 
 @app.route('/addtipo', methods=['GET', 'POST'])
+@login_required
 def addtipo():
     '''Adiciona o tipo de vegetal'''
     form = TipoForm()
@@ -26,6 +34,7 @@ def addtipo():
 
 
 @app.route('/addalimento', methods=['GET', 'POST'])
+@login_required
 def addalimento():
     '''Adiciona o vegetal'''
     form = AlimentoForm()
@@ -41,17 +50,19 @@ def addalimento():
 
 
 def _commit():
-    '''Faz o commit das transações de banco'''
+    '''Faz o commit ou rollback das transações de banco'''
     try:
         db.session.commit()
         return 'Cadastrado efetuado com sucesso.'
     except IntegrityError as e:
+        db.session.rollback()
         error = str(e.orig)
         if 'UNIQUE constraint failed' in error:
             return f"Já existe {e.params[0]} cadastrado(a)."
 
 
 @app.route('/apaga_alimento/<id>')
+@login_required
 def apaga_alimento(id):
     '''Apaga o alimento'''
     alimento = Alimento.query.get(id)
@@ -61,6 +72,7 @@ def apaga_alimento(id):
 
 
 @app.route('/apaga_tipo/<id>')
+@login_required
 def apaga_tipo(id):
     '''Apaga o tipo e seus relacionamentos'''
     alimentos = Alimento.query.all()
@@ -85,7 +97,17 @@ def logon():
         if user is None or not user.check_password(password):
             flash('Acesso negado.')
             return redirect(url_for('logon'))
+        login_user(user)
         flash('Acesso liberado.')
-        app.logger.debug(f"usuário: {username}, senha: {password}")
-        app.logger.debug(f"liberado: {user.check_password(password)}")
+        # Medidas de segurança para não forjar acesso
+        next_page = request.args.get('next')
+        if not next_page or url_parse(next_page).netloc != '':
+            next_page = url_for('index')
+        return redirect(next_page)
     return render_template('logon.html', form=form)
+
+
+@app.route('/logout')
+def logout():
+    logout_user()
+    return redirect(url_for('index'))

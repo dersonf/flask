@@ -1,5 +1,6 @@
 from app import db
 from werkzeug.security import generate_password_hash, check_password_hash
+from flask_login import UserMixin
 
 
 # Relacionamento de um pra muitos onde o tipo é um e alimento é muitos
@@ -32,8 +33,8 @@ class Alimento(db.Model):
         return f"<Alimento: {self.alimento}>"
 
 
-class User(db.Model):
-    '''Armazena os dados dos usuários'''
+class User(UserMixin, db.Model):
+    '''Armazena os dados dos usuários e carrega metodos de autenticação'''
     id = db.Column(db.Integer, unique=True, primary_key=True)
     username = db.Column(db.String(20), unique=True, nullable=False)
     fullname = db.Column(db.String(60), nullable=False)
