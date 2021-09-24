@@ -25,18 +25,26 @@ class UserLoginForm(FlaskForm):
     submit = SubmitField('Login')
 
 
-class UserCreateForm(FlaskForm):
-    message = 'Pelo menos 3 caracteres'
+class RegistroUsuarioForm(FlaskForm):
+    message_username = 'Pelo menos 3 letras'
+    message_password = 'As senhas estão diferentes'
     username = StringField('Usuário',
-        validators=[DataRequired(), Length(min=3, message=message)])
+        validators=[DataRequired(), Length(min=3, message=message_username)])
     fullname = StringField('Nome completo', validators=[DataRequired()])
     password = PasswordField('Senha', validators=[DataRequired()])
     password_again = PasswordField('Confirmar senha',
-        validators=[DataRequired(), EqualTo('password')])
+        validators=[DataRequired(),
+        EqualTo('password', message=message_password)])
+    submit = SubmitField('Cadastrar')
 
     def validate_username(self, username):
         '''Valida se username é único'''
         user = User.query.filter_by(username=username.data).first()
         # Se o user não estiver vazio vai lançar esse erro
         if user is not None:
-            raise ValidationError('Utilize outro username')
+            raise ValidationError('Utilize outro username, usuário já existe')
+
+
+class PerfilForm(FlaskForm):
+    fullname = StringField('Nome completo', validators=[DataRequired()])
+    submit = SubmitField('Atualizar')

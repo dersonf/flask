@@ -1,6 +1,11 @@
 {% extends "base.html" %}
 
 {% block content %}
+
+{% if current_user.is_authenticated %}
+<h3>Olá, {{ current_user.fullname }}</h3>
+{%  endif %}
+
 <h1>Lista de vegetais carregados na base:</h1>
 <ul>
 {% for vegetal in vegetais %}
@@ -11,5 +16,4 @@
     </li>
 {% endfor %}
 </ul>
-{{ session }}
 {% endblock %}

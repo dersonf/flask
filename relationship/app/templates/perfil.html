@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Perfil do usuário</h1>
+
+<form method='POST' action="">
+    {{ form.hidden_tag() }}
+    <p>Username: {{ user.username }}</p>
+    <p>
+    {{ form.fullname.label }} {{ form.fullname(size=40) }}
+    {% for error in form.fullname.errors %}
+        <span style="color: red">[{{ error }}]</span>
+    {% endfor %}
+    </p>
+    <p>
+    {{ form.submit }}
+    </p>
+</form>
+{% endblock %}

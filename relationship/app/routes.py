@@ -2,9 +2,15 @@ from flask.helpers import url_for
 from app import app, db, login
 from flask import render_template, redirect, flash, request
 from app.models import Alimento, Tipo, User
-from app.forms import TipoForm, AlimentoForm, UserLoginForm
+from app.forms import (
+    TipoForm,
+    AlimentoForm,
+    UserLoginForm,
+    RegistroUsuarioForm,
+    PerfilForm,
+    )
 from sqlalchemy.exc import IntegrityError
-from flask_login import login_user, logout_user, login_required
+from flask_login import login_user, logout_user, login_required, current_user
 from werkzeug.urls import url_parse
 
 
@@ -111,3 +117,37 @@ def logon():
 def logout():
     logout_user()
     return redirect(url_for('index'))
+
+
+@app.route('/registro', methods=['GET', 'POST'])
+@login_required
+def registro():
+    '''Registro de usuário'''
+    form = RegistroUsuarioForm()
+    if form.validate_on_submit():
+        new_user = User(username=form.username.data,
+            fullname=form.fullname.data)
+        new_user.set_password(form.password.data)
+        db.session.add(new_user)
+        db.session.commit()
+        flash(f"Usuário {form.username.data} cadastrado")
+        return redirect(url_for('registro'))
+    return render_template('registro.html', form=form)
+
+
+@app.route('/perfil', methods=['GET', 'POST'])
+@login_required
+def perfil():
+    '''Editar o perfil do usuário'''
+    form = PerfilForm()
+    user = User.query.get(current_user.id)
+    # if form.fullname.data != current_user.fullname:
+    form.fullname.data = current_user.fullname
+    if form.validate_on_submit():
+        user = User.query.get(current_user.id)
+        user.fullname = form.fullname.data
+        db.session.add(user)
+        db.session.commit()
+        flash('Dados atualizados')
+        return redirect(url_for('perfil'))
+    return render_template('perfil.html', form=form, user=user)
