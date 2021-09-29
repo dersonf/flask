@@ -140,9 +140,6 @@ def registro():
 def perfil():
     '''Editar o perfil do usuário'''
     form = PerfilForm()
-    user = User.query.get(current_user.id)
-    # if form.fullname.data != current_user.fullname:
-    form.fullname.data = current_user.fullname
     if form.validate_on_submit():
         user = User.query.get(current_user.id)
         user.fullname = form.fullname.data
@@ -150,4 +147,5 @@ def perfil():
         db.session.commit()
         flash('Dados atualizados')
         return redirect(url_for('perfil'))
-    return render_template('perfil.html', form=form, user=user)
+    form.fullname.data = current_user.fullname
+    return render_template('perfil.html', form=form)

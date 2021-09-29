@@ -5,6 +5,7 @@ from config import Config
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager
+from flask_bootstrap import Bootstrap
 
 # criando a convensão de nomes para constraints
 convention = {
@@ -24,6 +25,7 @@ app.config.from_object(Config)
 db = SQLAlchemy(app, metadata=metadata)
 migrate = Migrate(app, db, render_as_batch=True)
 login = LoginManager(app)
+bootstrap = Bootstrap(app)
 
 login.login_view = 'logon'
 login.login_message = 'Necessário efetuar o login.'
