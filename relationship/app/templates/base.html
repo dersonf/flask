@@ -1,26 +1,55 @@
-{% extends "bootstrap/base.html" %}
-
-{% block html_attribs %} lang="pt_br"{% endblock %}
-
-{% block title %}
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <title>
     {% if title %}
-        {{ title }}
+      {{ title }}
     {% else %}
-        Vegetais
+      Vegetais
     {% endif %}
-{% endblock %}
+    </title>
+    <link href="{{url_for('.static', filename='bootstrap.min.css')}}" rel="stylesheet">
+  </head>
+  <body>   
+    <main>
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark" aria-label="Eighth navbar example">
+        <div class="container">
+          <a class="navbar-brand" href="{{ url_for('index') }}">Vegetais</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample07" aria-controls="navbarsExample07" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
 
-{% block navbar %}
-    <div class="navbar navbar-fixed-top">
-        <a href="{{ url_for('index') }}">Home</a> - 
-        {% if current_user.is_authenticated %}
-        <a href="{{ url_for('addtipo') }}">Tipo</a> - 
-        <a href="{{ url_for('addalimento') }}">Alimento</a> - 
-        <a href="{{ url_for('registro') }}">Adicionar parceiro</a> - 
-        <a href="{{ url_for('perfil') }}">Perfil</a> - 
-        <a href="{{ url_for('logout') }}">Logout</a>
-        {% else %}
-        <a href="{{ url_for('logon') }}">Logon</a>
-        {% endif %}
-    </div>
-{% endblock %}
+          <div class="collapse navbar-collapse" id="navbarsExample07">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="{{ url_for('index') }}">Home</a>
+              </li>
+              {% if current_user.is_authenticated %}
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="{{ url_for('addtipo') }}">Tipo</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="{{ url_for('addalimento') }}">Alimento</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="{{ url_for('registro') }}">Adicionar parceiro</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="{{ url_for('perfil') }}">Perfil</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="{{ url_for('logout') }}">Logout</a>
+              </li>
+              {% else %}
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="{{ url_for('logon') }}">Logon</a>
+              </li>
+              {% endif %}
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </main>
+  </body>
+  {% block content %}{% endblock %}
+</html>
