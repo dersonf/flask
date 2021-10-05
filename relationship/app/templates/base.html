@@ -1,55 +1,98 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pt-br">
   <head>
-    <title>
-    {% if title %}
-      {{ title }}
-    {% else %}
-      Vegetais
-    {% endif %}
-    </title>
-    <link href="{{url_for('.static', filename='bootstrap.min.css')}}" rel="stylesheet">
-  </head>
-  <body>   
-    <main>
-      <nav class="navbar navbar-expand-lg navbar-dark bg-dark" aria-label="Eighth navbar example">
-        <div class="container">
-          <a class="navbar-brand" href="{{ url_for('index') }}">Vegetais</a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample07" aria-controls="navbarsExample07" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
 
-          <div class="collapse navbar-collapse" id="navbarsExample07">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="{{ url_for('index') }}">Home</a>
-              </li>
-              {% if current_user.is_authenticated %}
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="{{ url_for('addtipo') }}">Tipo</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="{{ url_for('addalimento') }}">Alimento</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="{{ url_for('registro') }}">Adicionar parceiro</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="{{ url_for('perfil') }}">Perfil</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="{{ url_for('logout') }}">Logout</a>
-              </li>
-              {% else %}
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="{{ url_for('logon') }}">Logon</a>
-              </li>
-              {% endif %}
-            </ul>
-          </div>
-        </div>
-      </nav>
-    </main>
-  </body>
-  {% block content %}{% endblock %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="{{ url_for('static', filename='favicon.ico') }}" rel="icon" >
+    <link href="{{ url_for('static', filename='bootstrap.min.css') }}" rel="stylesheet">
+
+    <title>
+      {% if title %}
+        {{ title }}
+      {% else %}
+        Vegetais
+      {% endif %}
+    </title>
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+
+      h1 {
+        margin-top: 25px;
+        margin-bottom: 25px;
+      }
+
+    </style>
+
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <ul class=flashes>
+                    {% for message in messages %}
+                        <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+  </head>
+    <body>
+      <main>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container-xl">
+              <a class="navbar-brand" href="{{ url_for('index') }}">Vegetais</a>
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" aria-expanded="false">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+        
+              <div class="collapse navbar-collapse">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                  <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="{{ url_for('index') }}">Home</a>
+                  </li>
+                  {% if current_user.is_authenticated %}
+                  <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="{{ url_for('addtipo') }}">Tipo</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="{{ url_for('addalimento') }}">Alimento</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="{{ url_for('registro') }}">Adicionar parceiro</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="{{ url_for('perfil') }}">Perfil</a>
+                  </li>
+                  {% endif %}
+                </ul>
+                <ul class="navbar-nav navbar-right">
+                  <li class="nav-item">
+                    {% if current_user.is_authenticated %}
+                    <a class="nav-link" aria-current="page" href="{{ url_for('logout') }}">Logout</a>
+                    {% else %}
+                    <a class="nav-link" aria-current="page" href="{{ url_for('logon') }}">Logon</a>
+                    {% endif %}
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </nav>
+      </main>
+      <div class="container">
+        {% block content%}{% endblock %}
+      </div>
+    </body>
 </html>
+

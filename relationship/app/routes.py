@@ -9,6 +9,7 @@ from app.forms import (
     RegistroUsuarioForm,
     PerfilForm,
     )
+from app.tabela import ItemTable
 from sqlalchemy.exc import IntegrityError
 from flask_login import login_user, logout_user, login_required, current_user
 from werkzeug.urls import url_parse
@@ -21,8 +22,12 @@ def load_user(user_id):
 
 @app.route('/')
 def index():
+    items = []
     vegetais = Alimento.query.all()
-    return render_template('index.html', vegetais=vegetais)
+    for vegetal in vegetais:
+        items.append(dict(id=vegetal.id, alimento=vegetal.alimento, vegetal=vegetal.tipo.tipo))
+    tabela = ItemTable(items)
+    return render_template('index.html', tabela=tabela)
 
 
 @app.route('/addtipo', methods=['GET', 'POST'])

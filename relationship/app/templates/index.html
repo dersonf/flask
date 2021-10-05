@@ -3,17 +3,11 @@
 {% block content %}
 
 {% if current_user.is_authenticated %}
-<h3>Olá, {{ current_user.fullname }}</h3>
+<h3 class="mt-4">Olá, {{ current_user.fullname }}</h3>
 {%  endif %}
 
 <h1>Lista de vegetais carregados na base:</h1>
-<ul>
-{% for vegetal in vegetais %}
-    <li>
-        <b>id:</b> {{ vegetal.id }}, 
-        <b>alimento:</b> {{ vegetal.alimento }}, 
-        <b>vegetal:</b> {{ vegetal.tipo.tipo }}
-    </li>
-{% endfor %}
-</ul>
+
+{{ tabela }}
+
 {% endblock %}
