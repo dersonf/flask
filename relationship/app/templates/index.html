@@ -6,8 +6,10 @@
 <h3 class="mt-4">Olá, {{ current_user.fullname }}</h3>
 {%  endif %}
 
-<h1>Lista de vegetais carregados na base:</h1>
+<h1 class="d-flex justify-content-center">Lista de vegetais carregados na base</h1>
 
+<div class="container table table-dark table-striped d-flex justify-content-center row text-center tabela">
 {{ tabela }}
+</div>
 
 {% endblock %}
