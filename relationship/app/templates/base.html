@@ -5,8 +5,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link href="{{ url_for('static', filename='favicon.ico') }}" rel="icon" >
+    <link href="{{ url_for('static', filename='images/favicon.ico') }}" rel="icon" >
     <link href="{{ url_for('static', filename='bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='signin.css') }}" rel="stylesheet">
 
     <title>
       {% if title %}
@@ -42,15 +43,6 @@
 
     </style>
 
-        {% with messages = get_flashed_messages() %}
-            {% if messages %}
-                <ul class=flashes>
-                    {% for message in messages %}
-                        <li>{{ message }}</li>
-                    {% endfor %}
-                </ul>
-            {% endif %}
-        {% endwith %}
   </head>
     <body>
       <main>
@@ -94,6 +86,15 @@
             </div>
           </nav>
       </main>
+      {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div style="margin: 10px" class="flashes alert alert-primary text-center alert-dismissible fade show">
+                {% for message in messages %}
+                    {{ message }}
+                {% endfor %}
+            </div>
+        {% endif %}
+      {% endwith %}
       <div class="container">
         {% block content%}{% endblock %}
       </div>

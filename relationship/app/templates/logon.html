@@ -1,23 +1,39 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>Logon</h1>
-<form method="post", action="", novalidate>
-    {{ form.hidden_tag() }}
-    <p>
-        {{ form.username.label }} {{ form.username(size=20) }}
+
+
+  <div style="margin-top: 10%;" class="d-flex justify-content-center form-signin signin-body text-center form-floating">
+    <form method="post", action="", novalidate>
+      {{ form.hidden_tag() }}
+      <img class="mb-4" src="{{ url_for('static', filename='images/apple-57-188770.png') }}">
+      
+      <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+  
+      <div class="form-floating">
+        {{ form.username(class="form-control", placeholder="name@example.com") }}
+        {{ form.username.label }}
         {% for error in form.username.errors %}
         <span style="color: red">[{{ error }}]</span>
         {% endfor %}
-    </p>
-    <p>
-        {{ form.password.label }} {{ form.password(size=20) }}
+      </div>
+      <div class="form-floating">
+        {{ form.password(class="form-control", placeholder="Password") }}
+        {{ form.password.label }}
         {% for error in form.password.errors %}
         <span style="color: red">[{{ error }}]</span>
         {% endfor %}
-    </p>
-    <p>
-        {{ form.submit }}
-    </p>
-</form>
+      </div>
+      <!--
+      <div class="checkbox mb-3">
+        <label>
+          <input type="checkbox" value="remember-me"> Remember me
+        </label>
+      </div>
+      -->
+      <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
+      <p class="mt-5 mb-3 text-muted">&copy; 2021–2021</p>
+    </form>
+  </div>
+
 {% endblock %}
