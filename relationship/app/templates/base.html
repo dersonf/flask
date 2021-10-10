@@ -9,6 +9,8 @@
     <link href="{{ url_for('static', filename='bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='signin.css') }}" rel="stylesheet">
 
+    <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+
     <title>
       {% if title %}
         {{ title }}
@@ -33,6 +35,7 @@
       }
 
       h1 {
+        text-align: center;
         margin-top: 25px;
         margin-bottom: 25px;
       }
@@ -59,14 +62,13 @@
                     <a class="nav-link" aria-current="page" href="{{ url_for('index') }}">Home</a>
                   </li>
                   {% if current_user.is_authenticated %}
-                  <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="{{ url_for('addtipo') }}">Tipo</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="{{ url_for('addalimento') }}">Alimento</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="{{ url_for('registro') }}">Adicionar parceiro</a>
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-bs-toggle="dropdown" aria-expanded="false">Adicionar</a>
+                    <ul class="dropdown-menu" aria-labelledby="dropdown01">
+                      <li><a class="dropdown-item" href="{{ url_for('addtipo') }}">Tipo Vegetal</a></li>
+                      <li><a class="dropdown-item" href="{{ url_for('addalimento') }}">Alimento</a></li>
+                      <li><a class="dropdown-item" href="{{ url_for('registro') }}">Usuário ao sistema</a></li>
+                    </ul>
                   </li>
                   <li class="nav-item">
                     <a class="nav-link" aria-current="page" href="{{ url_for('perfil') }}">Perfil</a>
