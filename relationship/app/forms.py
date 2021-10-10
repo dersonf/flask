@@ -6,7 +6,7 @@ from app.models import User
 
 class TipoForm(FlaskForm):
     tipo = StringField('Tipo de vegetal', validators=[DataRequired()])
-    submit = SubmitField('Salvar')
+    submit = SubmitField('Adicionar')
 
 
 class AlimentoForm(FlaskForm):

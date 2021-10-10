@@ -3,18 +3,18 @@
 {% block content %}
 <h1>Adiciona tipo</h1>
 
-<form method='POST' action="" class="form-inline">
-    <div class="form-group mb-2">
+<div class="text-center">
+<form method='POST'>
     {{ form.hidden_tag() }}
-    {{ form.tipo.label }} {{ form.tipo(class="form-control") }}
-    {{ form.submit }}
-    </div>
+    {{ form.tipo.label }} {{ form.tipo(placeholder='Tipo') }}
+    {{ form.submit(class="btn btn-dark mb-1 btn-lg") }}
 </form>
+</div>
 
 <h1>Tipos cadastrados</h1>
-<ul>
+<div class="text-center">
 {% for tipo in tipos %}
-    <li>{{ tipo.tipo }}<button><a href="{{  url_for('apaga_tipo', id=tipo.id) }}">Apagar</a></button></li>
+    <p class="lista-tabela">{{ tipo.tipo }}<button class="btn btn-dark mb-1 btn-lg"><a href="{{  url_for('apaga_tipo', id=tipo.id) }}">Apagar</a></button></p>
 {% endfor %}
-</ul>
+</div>
 {% endblock %}
