@@ -6,7 +6,7 @@
 <div class="text-center">
 <form method='POST'>
     {{ form.hidden_tag() }}
-    {{ form.tipo.label }} {{ form.tipo(placeholder='Tipo') }}
+    {{ form.tipo.label }} {{ form.tipo(class="forminput", placeholder='Tipo') }}
     {{ form.submit(class="btn btn-dark mb-1 btn-lg") }}
 </form>
 </div>
