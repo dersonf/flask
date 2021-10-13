@@ -9,6 +9,7 @@
 <h1>Registro de usuário</h1>
 
 <form class="form-horizontal" method='POST' action="">
+    <fieldset>
     {{ form.hidden_tag() }}
     <p>
     {{ form.username.label }} {{ form.username(size=20) }}
@@ -37,6 +38,7 @@
     <p>
     {{ form.submit }}
     </p>
+    </fieldset>
 </form>
 {% endblock %}
 
