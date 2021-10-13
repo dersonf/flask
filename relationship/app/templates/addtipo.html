@@ -3,18 +3,28 @@
 {% block content %}
 <h1>Adiciona tipo</h1>
 
-<div class="text-center">
-<form method='POST'>
+<div class="container text-center" >
+<form style="border: 1px solid grey; border-radius: 10px;" method='POST'>
     {{ form.hidden_tag() }}
-    {{ form.tipo.label }} {{ form.tipo(class="forminput", placeholder='Tipo') }}
+    {{ form.tipo.label(style="font-size: 25px;") }} {{ form.tipo(class="forminput", placeholder='Tipo') }}
     {{ form.submit(class="btn btn-dark mb-1 btn-lg") }}
 </form>
 </div>
 
 <h1>Tipos cadastrados</h1>
-<div class="text-center">
-{% for tipo in tipos %}
-    <p class="lista-tabela">{{ tipo.tipo }}<button class="btn btn-dark mb-1 btn-lg"><a href="{{  url_for('apaga_tipo', id=tipo.id) }}">Apagar</a></button></p>
-{% endfor %}
-</div>
+
+<div class="container table table-dark row text-center tabela">
+      <table>
+        <tr>
+          <th>Tipo</th>
+          <th>Apagar?</th>
+        </tr>
+        {% for tipo in tipos %}
+        <tr>
+          <td>{{ tipo.tipo }}</td>
+          <td><a class="btn btn-dark mb-1 btn-lg" href="{{  url_for('apaga_tipo', id=tipo.id) }}">Apagar</a></td>
+        </tr>
+        {% endfor %}
+      </table>
+  </div>
 {% endblock %}

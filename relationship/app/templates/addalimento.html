@@ -3,17 +3,33 @@
 {% block content %}
 <h1>Adiciona alimentos</h1>
 
-<form method='POST' action="">
+<div class="container text-center">
+<form style="border: 1px solid grey; border-radius: 10px;" method='POST' action="">
     {{ form.hidden_tag() }}
-    {{ form.tipos.label }} {{ form.tipos }}
-    {{ form.alimento.label }} {{ form.alimento(size=20) }}
-    {{ form.submit }}
+    {{ form.tipos.label(style="font-size: 25px;") }} {{ form.tipos(style="font-size: 25px;") }}
+    {{ form.alimento.label(style="font-size: 25px;") }} {{ form.alimento(class="forminput", placeholder='Alimento') }}
+    {{ form.submit(class="btn btn-dark mb-1 btn-lg") }}
 </form>
+</div>
 
-<h1>Alimentos cadastrados:</h1>
-<ul>
-{% for alimento in alimentos %}
-    <li><b>alimento: </b>{{ alimento.alimento }}, <b>tipo: </b>{{ alimento.tipo.tipo }} <button><a href="{{ url_for('apaga_alimento', id=alimento.id) }}">Apagar</a></button></li>
-{% endfor %}
-</ul>
+<div class="container text-center">
+  <h1>Alimentos cadastrados</h1>
+</div>
+
+<div class="container table table-dark row text-center tabela">
+    <table>
+      <tr>
+        <th>Alimento</th>
+        <th>Tipo</th>
+        <th>Apagar?</th>
+      </tr>
+      {% for alimento in alimentos %}
+      <tr>
+        <td>{{ alimento.alimento }}</td>
+        <td>{{ alimento.tipo.tipo }}</td>
+        <td><a class="btn btn-dark mb-1 btn-lg" href="{{ url_for('apaga_alimento', id=alimento.id) }}">Apagar</a></td>
+      </tr>
+      {% endfor %}
+    </table>
+</div>
 {% endblock %}
