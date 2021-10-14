@@ -3,17 +3,21 @@
 {% block content %}
 <h1>Perfil do usuário</h1>
 
-<form method='POST' action="">
+<form class="col-md-8 mx-auto" method='POST' action="" novalidate>
     {{ form.hidden_tag() }}
-    <p>Username: {{ current_user.username }}</p>
-    <p>
-    {{ form.fullname.label }} {{ form.fullname(size=40) }}
+    <div class="form-group mb-3">
+        <label for="username">Username</label>
+        <input class="form-control" type="text" id="username" name="username" value="{{ current_user.username }}" disabled></input>
+    </div>
+    <div class="form-group mb-3">
+    {{ form.fullname.label }}
+    {{ form.fullname(class="form-control") }}
     {% for error in form.fullname.errors %}
         <span style="color: red">[{{ error }}]</span>
     {% endfor %}
-    </p>
+    </div>
     <p>
-    {{ form.submit }}
+        {{ form.submit(class="btn-lg btn-dark") }}
     </p>
 </form>
 {% endblock %}
