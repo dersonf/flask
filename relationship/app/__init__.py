@@ -28,4 +28,4 @@ login = LoginManager(app)
 login.login_view = 'logon'
 login.login_message = 'Necessário efetuar o login.'
 
-from app import routes, models, forms
+from app import routes, models, forms, errors
