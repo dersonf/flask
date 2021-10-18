@@ -10,6 +10,7 @@
     <link href="{{ url_for('static', filename='bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='signin.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='navbar.css') }}" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Encode+Sans+Semi+Condensed:100,200,300,400" rel="stylesheet">
 
     <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
 
@@ -52,6 +53,7 @@
         margin: 8px;
         padding-top: 11px;
         padding-bottom: 11px;
+        padding-left: .75rem;
       }
 
       label {
@@ -72,6 +74,7 @@
         display: block;
         margin-left: auto;
         margin-right: auto;
+        margin-top: auto;
         width: 50%;
       }
 
@@ -131,6 +134,11 @@
       <div class="container">
         {% block content%}{% endblock %}
       </div>
+      <footer class="footer mt-auto py-3 bg-light">
+        <div class="container">
+          <span class="text-muted">2020 - 2021 - Desenvolvido por Anderson Ferneda.</span>
+        </div>
+      </footer>
     </body>
 </html>
 

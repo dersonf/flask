@@ -3,7 +3,7 @@
 {% block content %}
 
 
-  <div style="margin-top: 10%;" class="form-signin signin-body text-center">
+  <div style="margin-top: 5%;" class="form-signin signin-body text-center">
     <form class="form-signin", method="post", action="", novalidate>
       {{ form.hidden_tag() }}
       <img class="mb-4" src="{{ url_for('static', filename='images/apple-57-188770.png') }}">
@@ -11,15 +11,15 @@
       <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
   
       <div class="form-floating">
-        {{ form.username(class="form-control", placeholder="name@example.com", style="height: 70px") }}
-        {{ form.username.label(style="font-size:18px;") }}
+        {{ form.username(class="form-control", placeholder="name@example.com", style="height: 60px") }}
+        {{ form.username.label(style="font-size:15px;") }}
         {% for error in form.username.errors %}
         <span style="color: red">[{{ error }}]</span>
         {% endfor %}
       </div>
       <div class="form-floating">
-        {{ form.password(class="form-control", placeholder="Password", style="height: 70px") }}
-        {{ form.password.label(style="font-size:18px;") }}
+        {{ form.password(class="form-control", placeholder="Password", style="height: 60px") }}
+        {{ form.password.label(style="font-size:15px;") }}
         {% for error in form.password.errors %}
         <span style="color: red">[{{ error }}]</span>
         {% endfor %}
