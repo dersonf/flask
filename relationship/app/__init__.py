@@ -28,4 +28,7 @@ login = LoginManager(app)
 login.login_view = 'logon'
 login.login_message = 'Necessário efetuar o login.'
 
-from app import routes, models, forms, errors
+from app.errors import bp as errors_bp
+app.register_blueprint(errors_bp)
+
+from app import routes, models, forms

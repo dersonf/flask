@@ -108,7 +108,7 @@ def logon():
         if user is None or not user.check_password(password):
             flash('Acesso negado.')
             return redirect(url_for('logon'))
-        login_user(user)
+        login_user(useri)
         flash('Acesso liberado.')
         # Medidas de segurança para não forjar acesso
         next_page = request.args.get('next')
