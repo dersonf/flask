@@ -29,6 +29,6 @@ login.login_view = 'logon'
 login.login_message = 'Necessário efetuar o login.'
 
 from app.errors import bp as errors_bp
-app.register_blueprint(errors_bp)
+app.register_blueprint(errors_bp, url_prefix='/errors')
 
 from app import routes, models, forms

@@ -1,5 +1,10 @@
 {% extends "base.html" %}
 
+{% block head %}
+  {{ super() }}
+    <link href="{{ url_for('errors.static', filename='500.css') }}" rel="stylesheet">
+{% endblock %}
+
 {% block content %}
 
 <div class="vc-container">
