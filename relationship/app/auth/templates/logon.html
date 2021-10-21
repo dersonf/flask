@@ -2,7 +2,7 @@
 
 {% block head %}
   {{ super() }}
-  <link href="{{ url_for('static', filename='signin.css') }}" rel="stylesheet">
+  <link href="{{ url_for('auth.static', filename='signin.css') }}" rel="stylesheet">
 {% endblock %}
 
 
@@ -12,7 +12,7 @@
   <div style="margin-top: 5%;" class="form-signin signin-body text-center">
     <form class="form-signin", method="post", action="", novalidate>
       {{ form.hidden_tag() }}
-      <img class="mb-4" src="{{ url_for('static', filename='images/apple-57-188770.png') }}">
+      <img class="mb-4" src="{{ url_for('auth.static', filename='apple-57-188770.png') }}">
       
       <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
   

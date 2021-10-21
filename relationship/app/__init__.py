@@ -25,10 +25,13 @@ db = SQLAlchemy(app, metadata=metadata)
 migrate = Migrate(app, db, render_as_batch=True)
 login = LoginManager(app)
 
-login.login_view = 'logon'
+login.login_view = 'auth.logon'
 login.login_message = 'Necessário efetuar o login.'
 
 from app.errors import bp as errors_bp
 app.register_blueprint(errors_bp, url_prefix='/errors')
+
+from app.auth import bp as auth_bp
+app.register_blueprint(auth_bp, url_prefix='/auth')
 
 from app import routes, models, forms
