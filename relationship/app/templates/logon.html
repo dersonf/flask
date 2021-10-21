@@ -1,5 +1,11 @@
 {% extends "base.html" %}
 
+{% block head %}
+  {{ super() }}
+  <link href="{{ url_for('static', filename='signin.css') }}" rel="stylesheet">
+{% endblock %}
+
+
 {% block content %}
 
 
