@@ -1,14 +1,11 @@
-from app import app, db, login
-from flask import render_template, redirect, flash, url_for
+from app import db, login
+from app.main import bp
+from flask import render_template, flash, redirect, url_for
 from app.models import Alimento, Tipo, User
-from app.forms import (
-    TipoForm,
-    AlimentoForm,
-    # PerfilForm,
-    )
-from app.tabela import ItemTable
-from sqlalchemy.exc import IntegrityError
+from app.main.tabela import ItemTable
+from app.main.forms import TipoForm, AlimentoForm
 from flask_login import login_required
+from sqlalchemy.exc import IntegrityError
 
 
 @login.user_loader
@@ -16,17 +13,18 @@ def load_user(user_id):
     return User.query.get(user_id)
 
 
-@app.route('/')
+@bp.route('/')
 def index():
     items = []
     vegetais = Alimento.query.all()
     for vegetal in vegetais:
-        items.append(dict(id=vegetal.id, alimento=vegetal.alimento, vegetal=vegetal.tipo.tipo))
+        items.append(dict(id=vegetal.id, alimento=vegetal.alimento,
+                     vegetal=vegetal.tipo.tipo))
     tabela = ItemTable(items)
     return render_template('index.html', tabela=tabela)
 
 
-@app.route('/addtipo', methods=['GET', 'POST'])
+@bp.route('/addtipo', methods=['GET', 'POST'])
 @login_required
 def addtipo():
     '''Adiciona o tipo de vegetal'''
@@ -36,11 +34,11 @@ def addtipo():
         tipo = Tipo(tipo=form.tipo.data)
         db.session.add(tipo)
         flash(_commit())
-        return redirect(url_for('addtipo'))
+        return redirect(url_for('main.addtipo'))
     return render_template('addtipo.html', form=form, tipos=tipos)
 
 
-@app.route('/addalimento', methods=['GET', 'POST'])
+@bp.route('/addalimento', methods=['GET', 'POST'])
 @login_required
 def addalimento():
     '''Adiciona o vegetal'''
@@ -52,7 +50,7 @@ def addalimento():
         alimento = Alimento(alimento=form.alimento.data, tipo=tipo)
         db.session.add(alimento)
         flash(_commit())
-        return redirect(url_for('addalimento'))
+        return redirect(url_for('main.addalimento'))
     return render_template('addalimento.html', form=form, alimentos=alimentos)
 
 
@@ -68,17 +66,17 @@ def _commit():
             return f"Já existe {e.params[0]} cadastrado(a)."
 
 
-@app.route('/apaga_alimento/<id>')
+@bp.route('/apaga_alimento/<id>')
 @login_required
 def apaga_alimento(id):
     '''Apaga o alimento'''
     alimento = Alimento.query.get(id)
     db.session.delete(alimento)
     db.session.commit()
-    return redirect(url_for('addalimento'))
+    return redirect(url_for('main.addalimento'))
 
 
-@app.route('/apaga_tipo/<id>')
+@bp.route('/apaga_tipo/<id>')
 @login_required
 def apaga_tipo(id):
     '''Apaga o tipo e seus relacionamentos'''
@@ -90,20 +88,4 @@ def apaga_tipo(id):
     tipo = Tipo.query.get(int(id))
     db.session.delete(tipo)
     db.session.commit()
-    return redirect(url_for('addtipo'))
-
-
-# @app.route('/perfil', methods=['GET', 'POST'])
-# @login_required
-# def perfil():
-#     '''Editar o perfil do usuário'''
-#     form = PerfilForm()
-#     if form.validate_on_submit():
-#         user = User.query.get(current_user.id)
-#         user.fullname = form.fullname.data
-#         db.session.add(user)
-#         db.session.commit()
-#         flash('Dados atualizados')
-#         return redirect(url_for('perfil'))
-#     form.fullname.data = current_user.fullname
-#     return render_template('perfil.html', form=form)
+    return redirect(url_for('main.addtipo'))

@@ -27,7 +27,7 @@
       <tr>
         <td>{{ alimento.alimento }}</td>
         <td>{{ alimento.tipo.tipo }}</td>
-        <td><a class="btn btn-dark mb-1 btn-lg" href="{{ url_for('apaga_alimento', id=alimento.id) }}">Apagar</a></td>
+        <td><a class="btn btn-dark mb-1 btn-lg" href="{{ url_for('main.apaga_alimento', id=alimento.id) }}">Apagar</a></td>
       </tr>
       {% endfor %}
     </table>

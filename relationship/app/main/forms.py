@@ -13,8 +13,3 @@ class AlimentoForm(FlaskForm):
     # Faz um SelectField dinamico
     tipos = SelectField(u'Tipos', coerce=int)
     submit = SubmitField('Salvar')
-
-
-# class PerfilForm(FlaskForm):
-#     fullname = StringField('Nome completo', validators=[DataRequired()])
-#     submit = SubmitField('Atualizar')
