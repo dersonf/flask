@@ -64,3 +64,21 @@ def perfil():
         return redirect(url_for('auth.perfil'))
     form.fullname.data = current_user.fullname
     return render_template('perfil.html', form=form)
+
+
+@bp.route('/usuarios', methods=['GET', 'POST'])
+@login_required
+def usuarios():
+    '''Lista os usuários cadastrados'''
+    usuarios = User.query.all()
+    return render_template('usuarios.html', usuarios=usuarios)
+
+
+@bp.route('/delete/<id>')
+@login_required
+def delete(id):
+    '''Apaga usuário do sistema'''
+    user = User.query.get(id)
+    db.session.delete(user)
+    db.session.commit()
+    return redirect(url_for('auth.usuarios'))

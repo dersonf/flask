@@ -106,6 +106,9 @@
                   <li class="nav-item">
                     <a class="nav-link" aria-current="page" href="{{ url_for('auth.perfil') }}">Perfil</a>
                   </li>
+                  <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="{{ url_for('auth.usuarios') }}">Usuários</a>
+                  </li>
                   {% endif %}
                 </ul>
                 <ul class="navbar-nav navbar-right">
@@ -123,7 +126,7 @@
       </main>
       {% with messages = get_flashed_messages() %}
         {% if messages %}
-            <div style="margin: 10px" class="flashes alert alert-primary text-center alert-dismissible fade show">
+            <div style="margin: 10px" class="container flashes alert alert-primary text-center alert-dismissible fade show">
                 {% for message in messages %}
                     {{ message }}
                 {% endfor %}
@@ -135,7 +138,8 @@
       </div>
       <footer class="footer mt-auto py-3 bg-light">
         <div class="container text-center text-muted">
-          <span style="font-size: smaller;">2020 - 2021 - Desenvolvido por Anderson Ferneda.</span>
+          <span style="font-size: smaller;">2020 - <script>document.write(new Date().getFullYear())</script> - Desenvolvido por Anderson Ferneda.</span>
+          
         </div>
       </footer>
     </body>

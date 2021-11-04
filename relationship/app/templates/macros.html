@@ -1,0 +1,11 @@
+{% macro render_form(form, text) %}
+
+<div class="form-group mb-3">
+  {{ form.label }}
+  {{ form(class="form-control", placeholder=text) }}
+  {% for error in form.errors %}
+    <span style="color: red">[{{ error }}]</span>
+  {% endfor %}
+</div>
+
+{% endmacro %}
