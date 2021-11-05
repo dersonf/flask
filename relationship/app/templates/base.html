@@ -9,7 +9,6 @@
     <link href="{{ url_for('static', filename='images/favicon.ico') }}" rel="icon" >
     
     <link href="{{ url_for('static', filename='bootstrap.min.css') }}" rel="stylesheet">
-    <!--link href="{{ url_for('static', filename='sticky-footer.css') }}" rel="stylesheet"-->
     <link href="{{ url_for('static', filename='navbar.css') }}" rel="stylesheet">
     <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
 
@@ -126,11 +125,11 @@
       </main>
       {% with messages = get_flashed_messages() %}
         {% if messages %}
-            <div style="margin: 10px" class="container flashes alert alert-primary text-center alert-dismissible fade show">
-                {% for message in messages %}
-                    {{ message }}
-                {% endfor %}
-            </div>
+          <div class="container flashes alert alert-primary text-center alert-dismissible fade show">
+            {% for message in messages %}
+              {{ message }}
+            {% endfor %}
+          </div>
         {% endif %}
       {% endwith %}
       <div class="container">
@@ -139,9 +138,7 @@
       <footer class="footer mt-auto py-3 bg-light">
         <div class="container text-center text-muted">
           <span style="font-size: smaller;">2020 - <script>document.write(new Date().getFullYear())</script> - Desenvolvido por Anderson Ferneda.</span>
-          
         </div>
       </footer>
     </body>
 </html>
-
